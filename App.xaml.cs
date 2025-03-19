@@ -1,15 +1,18 @@
-﻿namespace BarrioTab
+﻿using BarrioTab.Services;
+
+namespace BarrioTab
 {
     public partial class App : Application
     {
-        public App()
+
+        public App(DataBaseService dataBaseService)
         {
             InitializeComponent();
-        }
+            MainPage = new AppShell();
 
-        protected override Window CreateWindow(IActivationState? activationState)
-        {
-            return new Window(new AppShell());
+            Task.Run(async () => await dataBaseService.InicializaBasedeDatosAsync())
+                .GetAwaiter()
+                .GetResult();
         }
     }
 }

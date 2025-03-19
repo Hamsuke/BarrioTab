@@ -1,0 +1,73 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:toolkit="http://schemas.microsoft.com/dotnet/2022/maui/toolkit"
+             x:Class="BarrioTab.Views.MainPage"
+                 xmlns:model="clr-namespace:BarrioTab.Models"
+                 xmlns:viewmodel="clr-namespace:BarrioTab.ViewModels"
+                 x:DataType="viewmodel:MainPageViewModel"
+                 xmlns:controls="clr-namespace:BarrioTab.Controls"
+    >
+
+    <ContentPage.Behaviors>
+        <toolkit:EventToCommandBehavior EventName="Appearing" Command="{Binding ReloadData}"/>
+    </ContentPage.Behaviors>
+
+    <Grid ColumnDefinitions=".75*, .25*" RowDefinitions="auto, *">
+        <Border Grid.Row="0">
+                <CollectionView ItemsSource="{Binding categorias}">
+                <CollectionView.ItemsLayout>
+                    <GridItemsLayout Orientation="Horizontal" Span="1" HorizontalItemSpacing="5" />
+                </CollectionView.ItemsLayout>
+
+                <CollectionView.ItemTemplate>
+                    <DataTemplate x:DataType="model:Categorias">
+                        <Border Padding="5" StrokeThickness="1" BackgroundColor="Transparent">
+                            <HorizontalStackLayout>
+                                <Button Text="{Binding nombre}"  
+                                    BorderColor="Transparent" 
+                                    BackgroundColor="Transparent"
+                                    CornerRadius="10"
+                                    Command="{Binding Source={RelativeSource 
+                                                      AncestorType={x:Type viewmodel:MainPageViewModel}}, 
+                                                      Path=GetMenuPorCategoriaCommand}"
+                                    CommandParameter="{Binding id}"
+                                    TextColor="White"/>
+                            </HorizontalStackLayout>
+                        </Border>
+                    </DataTemplate>
+                </CollectionView.ItemTemplate>
+            </CollectionView>
+            </Border>
+            <Border Grid.Row="1">
+                <CollectionView ItemsSource="{Binding menu}">
+                    <CollectionView.ItemsLayout>
+                        <GridItemsLayout Orientation="Vertical" Span="4" HorizontalItemSpacing="5" />
+                    </CollectionView.ItemsLayout>
+                    <CollectionView.ItemTemplate>
+                        <DataTemplate x:DataType="model:Almacen">
+                            <Border>
+                                <HorizontalStackLayout>
+                                    <Label Text="{Binding nombre}"/>
+                                </HorizontalStackLayout>
+                            </Border>
+                        </DataTemplate>
+                    </CollectionView.ItemTemplate>
+                </CollectionView>
+            </Border>
+
+            <Border Grid.Column="1" Stroke="Black" StrokeThickness="2" Grid.Row="0">
+            <Grid BackgroundColor="#721D36">
+                <VerticalStackLayout>
+                    <Label FontSize="25" FontAttributes="Bold" Text="Orden actual" HorizontalOptions="CenterAndExpand"/>
+                    <controls:CurrentDateTimeControl HorizontalOptions="CenterAndExpand"/>
+                </VerticalStackLayout>
+            </Grid>
+        </Border>
+        <Border Grid.Column="1" Grid.Row="1" Stroke="Black">
+            <VerticalStackLayout Grid.Column="1" Grid.Row="1" BackgroundColor="#721D36">
+                <Label Text="test"/>
+            </VerticalStackLayout>
+        </Border>
+    </Grid>
+</ContentPage>

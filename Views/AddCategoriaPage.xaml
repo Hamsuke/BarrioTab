@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:toolkit="http://schemas.microsoft.com/dotnet/2022/maui/toolkit"
+             x:Class="BarrioTab.Views.AddCategoriaPage"
+             xmlns:model="clr-namespace:BarrioTab.Models"
+             xmlns:viewmodel="clr-namespace:BarrioTab.ViewModels"
+             x:DataType="viewmodel:AddCategoriaViewModel"
+             Title="AddCategoriaPage">
+
+    <ContentPage.Behaviors>
+        <toolkit:EventToCommandBehavior EventName="Appearing" Command="{Binding CargaListaCommand}"/>
+    </ContentPage.Behaviors>
+
+    <Grid ColumnDefinitions=".75*, .25*">
+        <Grid Grid.Column="0"
+              RowDefinitions="auto,auto,auto,auto"
+              ColumnDefinitions="auto,auto"
+              RowSpacing="10"
+              ColumnSpacing="5"
+              >
+
+            <CollectionView Grid.Column="0" Grid.Row="1" ItemsSource="{Binding cat}">
+                <CollectionView.ItemsLayout>
+                    <GridItemsLayout Orientation="Horizontal" Span="1" HorizontalItemSpacing="5" />
+                </CollectionView.ItemsLayout>
+                <CollectionView.ItemTemplate>
+                    <DataTemplate x:DataType="model:Categorias">
+                        <Border Padding="5" StrokeThickness="1" BackgroundColor="Transparent">
+                            <HorizontalStackLayout>
+                                <Button Text="{Binding nombre}"
+                                        />
+                            </HorizontalStackLayout>
+                        </Border>
+                    </DataTemplate>
+                </CollectionView.ItemTemplate>
+            </CollectionView>
+        </Grid>
+    </Grid>
+</ContentPage>
